@@ -1,0 +1,41 @@
+docker image pull jenkins/jenkins:lts
+docker volume create jenkinsvolume
+
+docker container run -d \
+    -p [YOUR PORT]:8080 \
+    -v [YOUR VOLUME]:/var/jenkins_home \
+    --name jenkins-local \
+    jenkins/jenkins:lts
+    
+docker container run -d -p 8082:8080 \
+    -v jenkinsvol1:/var/jenkins_home \
+    --name jenkins-local \
+    jenkins/jenkins:lts
+    
+ docker ps
+ 
+ http://localhost:8082 
+ 
+ docker container exec \
+    [CONTAINER ID or NAME] \
+    sh -c "cat /var/jenkins_home/secrets/initialAdminPassword"
+    
+Create First Admin User
+
+Confirming Jenkins state is persisted
+
+Leave everything as default and add a new Shell Execution under Build. Add this as the command:
+
+echo "Working"
+
+Click on the Build Status (blue ball) under Build History (left sidebar) to view the console output. You should see that our command ran with no problems
+
+docker container kill [CONTAINER ID] t
+
+docker container run -d -p 8082:8080 \
+    -v jenkinsvol1:/var/jenkins_home \
+    --name jenkinslocal \
+    jenkins/jenkins:lts
+    
+ After logging in, you should see the job you created and view the console output.
+ 
